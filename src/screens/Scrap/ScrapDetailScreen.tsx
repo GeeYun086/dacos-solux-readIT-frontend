@@ -9,8 +9,34 @@ import {
   Switch,
   Modal,
   TextInput,
+  TouchableWithoutFeedback, // 임포트 추가
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
+
+const thumbnailImage = require('../../img/thumbnail.png'); // 로컬 이미지 예시
+
+const articles = [
+  {
+    thumbnail: thumbnailImage, // 로컬 이미지 사용
+    title: 'IT 트렌드 자소서 직무에 맞는 자소서 쓰는 꿀팁 10가지',
+    publisher: '솔룩스 일보',
+  },
+  {
+    thumbnail: thumbnailImage, // 로컬 이미지 사용
+    title: '데이터 전문가들이 전하는 최신 비즈니스 인사이트 동향',
+    publisher: '다코스 일보',
+  },
+  {
+    thumbnail: thumbnailImage, // 로컬 이미지 사용
+    title: '분산 네트워크의 혁명 블록체인 아키텍처의 시각화',
+    publisher: '눈송이 일보',
+  },
+  {
+    thumbnail: thumbnailImage, // 로컬 이미지 사용
+    title: '에이전틱 AI 간의 협력… "AI 스웜"이라는 새로운 기술에 주목할 때',
+    publisher: '중앙 일보',
+  },
+];
 
 const ScrapDetailScreen = ({route}) => {
   const {articleTitle, articlePublisher} = route.params;
@@ -158,12 +184,14 @@ const ScrapDetailScreen = ({route}) => {
           />
         </TouchableOpacity>
         {/* Summaries */}
+        <View style={styles.separator} />
         <Text style={styles.mindmap}>리딧 AI의 요약</Text>
         <Text style={styles.summary}>
           {splitSummaryText(
             '오픈AI의 스웜(Swarm)은 자율적으로 협력하는 AI 에이전트 네트워크를 구축할 수 있는 실험적 프레임워크입니다. 이 프레임워크는 다중 에이전트가 복잡한 작업을 인간의 개입 없이 수행할 수 있도록 설계되었습니다. 스웜은 오픈소스 프로젝트로, Python 개발자들이 사용할 수 있습니다. 또한, 에이전트 간 작업을 넘기는 핸드오프 기능과 작업 지침을 제공하는 루틴 기능을 지원합니다. 스웜은 여러 가지 가능성을 제시하지만, 동시에 사이버보안 위험을 증가시킬 수 있는 잠재력도 가지고 있습니다. 이러한 위험에 대응하기 위해서는 에이전틱 AI 스웜 기술을 활용한 방어 기술이 필요할 것으로 보입니다.',
           )}
         </Text>
+        <View style={styles.separator} />
         <Text style={styles.mindmap}>MY 마인드맵</Text>
         <Text style={styles.mindmaptext}>
           아직 등록된 MY 마인드맵이 없습니다. 새로 등록하시겠습니까?
@@ -175,9 +203,30 @@ const ScrapDetailScreen = ({route}) => {
             style={styles.makeMindMapImage}
           />
         </TouchableOpacity>
+        <View style={styles.separator} />
+        <Text style={styles.mindmap}>이 스크랩과 관련된 추천 컨텐츠</Text>
+        <View style={styles.recommendedArticles}>
+          {articles.map((article, index) => (
+            <TouchableOpacity
+              key={index}
+              style={styles.articleContainer}
+              onPress={() => {
+                // Handle the article press (e.g., navigate to the article's details)
+                console.log(`Article pressed: ${article.title}`);
+              }}>
+              <Image
+                source={article.thumbnail}
+                style={styles.articleThumbnail}
+              />
+              <View style={styles.articleTextContainer}>
+                <Text style={styles.articleTitle}>{article.title}</Text>
+                <Text style={styles.articlePublisher}>{article.publisher}</Text>
+              </View>
+            </TouchableOpacity>
+          ))}
+        </View>
       </ScrollView>
 
-      {/* Memo Modal */}
       <Modal
         transparent={true}
         animationType="slide"
@@ -186,7 +235,8 @@ const ScrapDetailScreen = ({route}) => {
         <View style={styles.modalOverlay}>
           <View style={styles.modalContainer}>
             <Text style={styles.modalTitle}>문장에 메모 추가하기</Text>
-            <Text style={styles.modalText}>{selectedText}</Text>
+            <Text style={styles.modalText}>{selectedText}</Text>{' '}
+            {/* Display selected text */}
             <TextInput
               style={styles.modalInput}
               placeholder="메모를 입력하세요..."
@@ -211,8 +261,15 @@ const ScrapDetailScreen = ({route}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
-    backgroundColor: 'white',
+    backgroundColor: '#fff',
+    paddingTop: 20,
+    paddingHorizontal: 15,
+  },
+  separator: {
+    borderBottomWidth: 1,
+    borderBottomColor: '#ddd',
+    marginBottom: 16,
+    padding: 12,
   },
   header: {
     flexDirection: 'row',
@@ -224,92 +281,84 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
-  image: {
-    width: 25,
-    height: 25,
-    marginRight: 10,
-  },
   headerText: {
-    fontSize: 20,
-    fontWeight: 'bold',
+    fontSize: 18,
+    color: '#333',
+    marginLeft: 10,
   },
   toggleContainer: {
     flexDirection: 'row',
     alignItems: 'center',
   },
   toggleItem: {
+    marginRight: 15,
     flexDirection: 'row',
     alignItems: 'center',
-    marginRight: 15,
   },
   toggleLabel: {
-    marginLeft: 5,
     fontSize: 14,
-  },
-  content: {
-    paddingBottom: 20,
+    color: '#333',
+    marginLeft: 5,
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 10,
+    color: '#333',
   },
   publisherContainer: {
     flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 10,
+    justifyContent: 'space-between',
+    marginBottom: 20,
   },
   publisher: {
-    fontSize: 12,
-    color: 'gray',
-    marginRight: 10,
+    fontSize: 14,
+    color: '#888',
   },
   date: {
-    fontSize: 12,
-    color: 'gray',
+    fontSize: 14,
+    color: '#888',
+    marginRight: 120,
   },
   iconsContainer: {
     flexDirection: 'row',
-    alignItems: 'center',
-    marginLeft: 'auto',
+    marginRight: 20,
   },
   icon: {
     width: 20,
     height: 20,
-    marginHorizontal: 5,
+    marginRight: 5,
   },
   iconText: {
-    fontSize: 12,
-    color: 'gray',
+    fontSize: 14,
+    color: '#888',
   },
   thumbnailImage: {
     width: '100%',
     height: 200,
-    resizeMode: 'cover',
     marginBottom: 20,
   },
   gotoArticleButton: {
     flexDirection: 'row',
-    justifyContent: 'flex-end', // 오른쪽 정렬
-    marginBottom: 20,
+    justifyContent: 'flex-end',
   },
   gotoArticleImage: {
     width: 143,
     height: 45,
   },
+  summary: {
+    fontSize: 16,
+    color: '#333',
+    marginBottom: 20,
+  },
   mindmap: {
     fontSize: 20,
     fontWeight: 'bold',
-    marginBottom: 10,
+    marginBottom: 16,
   },
   mindmaptext: {
-    fontSize: 16,
-    marginBottom: 10,
-    color: 'gray',
-  },
-  summary: {
-    fontSize: 16,
-    color: 'black',
+    fontSize: 14,
+    color: '#888',
     marginBottom: 20,
   },
   makeMindMapButton: {
@@ -328,30 +377,48 @@ const styles = StyleSheet.create({
     textDecorationLine: 'underline',
     textDecorationColor: 'red', // 텍스트에 파란색 밑줄 추가
   },
+  recommendedArticles: {
+    marginTop: 12,
+    marginBottom: 20,
+  },
+  articleContainer: {
+    flexDirection: 'row',
+    marginBottom: 20,
+  },
+  articleThumbnail: {
+    width: 80,
+    height: 80,
+    marginRight: 10,
+    borderRadius: 10,
+  },
+  articleTextContainer: {
+    flex: 1,
+  },
+  articleTitle: {
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  articlePublisher: {
+    marginTop: 8,
+    fontSize: 14,
+    color: '#888',
+  },
   modalOverlay: {
     flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
   modalContainer: {
-    width: '80%',
     backgroundColor: 'white',
     padding: 20,
     borderRadius: 10,
-    alignItems: 'center',
+    width: '80%',
   },
   modalTitle: {
     fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 10,
-  },
-  modalText: {
-    fontSize: 14,
-    color: 'blue',
-    marginBottom: 16,
-    marginTop: 12,
-    textAlign: 'left',
   },
   modalInput: {
     width: '100%',
@@ -362,15 +429,32 @@ const styles = StyleSheet.create({
     padding: 5,
     marginBottom: 10,
   },
-  modalButtonContainer: {
-    marginTop: 24,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: '100%',
+  modalText: {
+    fontSize: 14,
+    color: 'blue',
+    marginBottom: 16,
+    marginTop: 12,
+    textAlign: 'left',
   },
-  modalButtonText: {
-    fontSize: 16,
-    color: 'black', // 버튼 텍스트 색상을 검정색으로 설정
+  saveButton: {
+    backgroundColor: '#4e92f0',
+    padding: 10,
+    borderRadius: 5,
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  saveButtonText: {
+    color: '#fff',
+    fontWeight: 'bold',
+  },
+  cancelButton: {
+    backgroundColor: '#f4f3f4',
+    padding: 10,
+    borderRadius: 5,
+    alignItems: 'center',
+  },
+  cancelButtonText: {
+    color: '#333',
   },
 });
 
