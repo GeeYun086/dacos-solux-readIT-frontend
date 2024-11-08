@@ -68,22 +68,18 @@ const JobSelectionScreen = () => {
       </View>
 
       <View style={styles.buttonContainer}>
-      <Text style={styles.subText}>*선택한 직무를 중심으로 IT 기사가 추천됩니다</Text>
+        <Text style={styles.subText}>*선택한 직무를 중심으로 IT 기사가 추천됩니다</Text>
 
-      <TouchableOpacity style={styles.completeButton} onPress={completeSignUp}>
-        <Text style={styles.completeButtonText}>선택 완료</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity onPress={completeSignUp}>
-        <Text style={styles.selectLaterText}>다음에 선택하기</Text>
-      </TouchableOpacity>
+        <TouchableOpacity style={styles.completeButton} onPress={completeSignUp}>
+          <Text style={styles.completeButtonText}>선택 완료</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, alignItems: 'center', paddingHorizontal: 20, paddingVertical: 40 },
+  container: { flex: 1, alignItems: 'center', paddingHorizontal: 20, paddingVertical: 80 },
   header: { fontSize: 18, fontWeight: 'bold', marginBottom: 20, textAlign: 'center' },
   subText: {
     fontSize: 14,
@@ -102,11 +98,11 @@ const styles = StyleSheet.create({
   jobItem: { flexDirection: 'row', alignItems: 'center', marginBottom: 15 },
   jobText: { marginLeft: 10, fontSize: 16 },
   buttonContainer: {
-      width: '100%',
-      position: 'absolute',
-      bottom: 40,
-      alignItems: 'center',
-    },
+    width: '100%',
+    position: 'absolute',
+    bottom: 60,
+    alignItems: 'center',
+  },
   completeButton: {
     width: '80%',
     backgroundColor: '#007BFF',
@@ -118,11 +114,6 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 16,
     fontWeight: 'bold',
-  },
-  selectLaterText: {
-      color: 'black',
-      marginTop: 15,
-      fontSize: 14,
   },
   radioButton: {
     width: 24,
