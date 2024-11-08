@@ -13,6 +13,7 @@ import AllScreen from '../screens/All/AllScreen';
 import MyPageScreen from '../screens/MyPage/MyPageScreen';
 import ScrapScreen from '../screens/Scrap/ScrapScreen';
 import TrendScreen from '../screens/Trend/TrendScreen';
+import ArticleDetailScreen from '../screens/Trend/ArticleDetailScreen';
 
 // ScrapDetailScreen 추가 import
 import ScrapDetailScreen from '../screens/Scrap/ScrapDetailScreen'; // ScrapDetailScreen 추가
@@ -102,6 +103,11 @@ const AppNavigator = () => {
           <Stack.Screen
             name="TrendScreen"
             component={TrendScreen}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="ArticleDetailScreen"
+            component={ArticleDetailScreen}
             options={{headerShown: false}}
           />
 
