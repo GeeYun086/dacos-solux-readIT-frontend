@@ -1,11 +1,18 @@
-import React, { useContext } from 'react';
-import { View, Text, TextInput, StyleSheet, Image, TouchableOpacity } from 'react-native';
-import { AuthContext } from '../../navigator/AppNavigator';
+import React, {useContext} from 'react';
+import {
+  View,
+  Text,
+  TextInput,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+} from 'react-native';
+import {AuthContext} from '../../navigator/AppNavigator';
 
-const logoTitle = require('../../img/logo.png');  // 로고 아이콘
+const logoTitle = require('../../img/logo.png'); // 로고 아이콘
 
-const LoginScreen = ({ navigation }) => {
-  const { login } = useContext(AuthContext);  // AuthContext에서 login 함수 사용
+const LoginScreen = ({navigation}) => {
+  const {login} = useContext(AuthContext); // AuthContext에서 login 함수 사용
 
   return (
     <View style={styles.container}>
@@ -40,6 +47,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 20,
     paddingVertical: 40,
+    backgroundColor: 'white',
   },
   logo: {
     marginBottom: 40,

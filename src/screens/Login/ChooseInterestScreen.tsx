@@ -1,11 +1,11 @@
-import React, { useContext } from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
-import { AuthContext } from '../../navigator/AppNavigator';
+import React, {useContext} from 'react';
+import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
+import {AuthContext} from '../../navigator/AppNavigator';
 
-const logoTitle = require('../../img/logo.png');  // 로고 아이콘
+const logoTitle = require('../../img/logo.png'); // 로고 아이콘
 
-const ChooseInterestScreen = ({ navigation }) => {
-  const { completeSignUp } = useContext(AuthContext);
+const ChooseInterestScreen = ({navigation}) => {
+  const {completeSignUp} = useContext(AuthContext);
 
   return (
     <View style={styles.container}>
@@ -14,8 +14,12 @@ const ChooseInterestScreen = ({ navigation }) => {
       <Text style={styles.subText}>리딧은 맞춤형 IT 콘텐츠를 추천합니다</Text>
 
       <View style={styles.buttonContainer}>
-        <Text style={styles.subText}>*선택한 직무를 중심으로 IT 기사가 추천됩니다</Text>
-        <TouchableOpacity style={styles.signupButton} onPress={() => navigation.navigate('JobSelectionScreen')}>
+        <Text style={styles.subText}>
+          *선택한 직무를 중심으로 IT 기사가 추천됩니다
+        </Text>
+        <TouchableOpacity
+          style={styles.signupButton}
+          onPress={() => navigation.navigate('JobSelectionScreen')}>
           <Text style={styles.signupButtonText}>직무보기</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={completeSignUp}>
@@ -32,6 +36,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 20,
     paddingVertical: 40,
+    backgroundColor: 'white',
   },
   logo: {
     marginBottom: 40,
