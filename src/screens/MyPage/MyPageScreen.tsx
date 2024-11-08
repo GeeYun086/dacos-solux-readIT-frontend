@@ -1,17 +1,69 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
   StyleSheet,
   TouchableOpacity,
   ScrollView,
+  Alert,
 } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const MyPageScreen = () => {
-  // 사용자 정보 예시 (변수로 처리)
-  const userName = '눈송이'; // 실제로는 사용자의 이름을 상태나 props로 받아야 합니다.
-  const userEmail = 'noonsong@sookmyung.ac.kr'; // 마찬가지로 이메일도 변수로 받아야 합니다.
-  const selectedJob = '백엔드 개발자'; // 선택한 직무도 변수로 처리
+  // 사용자 정보 상태 변수
+  const [userName, setUserName] = useState('');
+  const [userEmail, setUserEmail] = useState('');
+  const [selectedJob, setSelectedJob] = useState('');
+  const [loading, setLoading] = useState(true); // 데이터를 불러오는 중 표시
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        // AsyncStorage에서 토큰 가져오기
+        const token = await AsyncStorage.getItem('userToken');
+        console.log(token);
+
+        if (token) {
+          // 사용자 정보 API 요청
+          const response = await fetch(`http://43.200.64.115:8081/api/v1/user/info`, {
+            method: 'GET',
+            headers: {
+              'Authorization': `Bearer ${token}`,
+              //'Content-Type': 'application/json',
+            },
+          });
+
+          const data = await response.json();
+          console.log(data);
+          if (response.ok) {
+            // 사용자 정보 업데이트
+            setUserName(data.data.name);
+            setUserEmail(data.data.email);
+            setSelectedJob(data.data.jobName);
+          } else {
+            Alert.alert('오류', data.message);
+          }
+        } else {
+          Alert.alert('오류', '로그인 정보가 없습니다.');
+        }
+      } catch (error) {
+        Alert.alert('오류', '사용자 정보를 불러오는 중 오류가 발생했습니다.');
+      } finally {
+        setLoading(false); // 데이터 로딩 완료
+      }
+    };
+
+    fetchUserData();
+  }, []);
+
+  // 로딩 중일 때 표시할 UI
+  if (loading) {
+    return (
+      <View style={styles.container}>
+        <Text>로딩 중...</Text>
+      </View>
+    );
+  }
 
   return (
     <ScrollView contentContainerStyle={styles.container}>

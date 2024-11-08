@@ -28,7 +28,12 @@ const SignUpScreen = ({ navigation }) => {
       return;
     }
 
-    navigation.navigate('ChooseInterestScreen');
+    // Navigate to ChooseInterestScreen and pass the data
+    navigation.navigate('ChooseInterestScreen', {
+      name,
+      email,
+      password,
+    });
   };
 
   return (

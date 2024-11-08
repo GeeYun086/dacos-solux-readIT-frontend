@@ -3,7 +3,10 @@ import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 
 const logoTitle = require('../../img/logo.png'); // 로고 아이콘
 
-const ChooseInterestScreen = ({ navigation }) => {
+const ChooseInterestScreen = ({ navigation, route }) => {
+  // Extract the data passed from SignUpScreen
+  const { name, email, password } = route.params;
+
   return (
     <View style={styles.container}>
       <Image source={logoTitle} style={styles.logo} />
@@ -16,7 +19,11 @@ const ChooseInterestScreen = ({ navigation }) => {
         </Text>
         <TouchableOpacity
           style={styles.signupButton}
-          onPress={() => navigation.navigate('JobSelectionScreen')}>
+          onPress={() => navigation.navigate('JobSelectionScreen', {
+            name,   // Passing the data
+            email,  // Passing the data
+            password, // Passing the data
+          })}>
           <Text style={styles.signupButtonText}>직무보기</Text>
         </TouchableOpacity>
       </View>
