@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 
 const MyPageScreen = () => {
   // 사용자 정보 예시 (변수로 처리)
@@ -8,10 +8,7 @@ const MyPageScreen = () => {
   const selectedJob = '백엔드 개발자';  // 선택한 직무도 변수로 처리
 
   return (
-    <View style={styles.container}>
-      {/* 왼쪽에 ReadIT 텍스트 추가 */}
-      <Text style={styles.logoText}>ReadIT</Text>
-
+    <ScrollView contentContainerStyle={styles.container}>
       {/* 회원 이름 표시 */}
       <Text style={styles.userInfoText}>{userName} 님</Text>
 
@@ -57,24 +54,17 @@ const MyPageScreen = () => {
       <TouchableOpacity>
         <Text style={styles.helpText}>회원탈퇴</Text>
       </TouchableOpacity>
-    </View>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     paddingHorizontal: 20,
     paddingVertical: 40,
   },
-  logoText: {
-    fontSize: 30,
-    fontWeight: 'bold',
-    color: '#007BFF',  // 파란색 텍스트
-    marginBottom: 30,
-  },
   userInfoText: {
-    fontSize: 18,
+    fontSize: 16,
     marginBottom: 15,
     color: 'black',
   },
@@ -91,12 +81,10 @@ const styles = StyleSheet.create({
   },
   changeJobText: {
     fontSize: 16,
-    color: '#007BFF',  // 파란색 텍스트
     marginBottom: 10,
   },
   helpText: {
     fontSize: 16,
-    color: '#007BFF',  // 파란색 텍스트
     marginBottom: 10,
   },
 });

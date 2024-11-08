@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, SafeAreaView } from 'react-native';
 
 // 임시 이미지들
 const thumbnailImage = require('../../img/thumbnail.png'); // 썸네일 이미지
@@ -12,25 +12,25 @@ const TrendScreen = () => {
   // 핫한 IT 콘텐츠 예시 데이터
   const hotArticles = {
     today: [
-      { title: '오늘의 첫 번째 기사', publisher: 'TechCrunch', thumbnail: thumbnailImage },
-      { title: '오늘의 두 번째 기사', publisher: 'The Verge', thumbnail: thumbnailImage },
-      { title: '오늘의 세 번째 기사', publisher: 'Wired', thumbnail: thumbnailImage },
-      { title: '오늘의 네 번째 기사', publisher: 'CNET', thumbnail: thumbnailImage },
-      { title: '오늘의 다섯 번째 기사', publisher: 'Engadget', thumbnail: thumbnailImage },
+      { title: '오늘의 첫 번째 기사', publisher: '솔룩스 일보', thumbnail: thumbnailImage },
+      { title: '오늘의 두 번째 기사', publisher: '다코스 일보', thumbnail: thumbnailImage },
+      { title: '오늘의 세 번째 기사', publisher: '눈송이 일보', thumbnail: thumbnailImage },
+      { title: '오늘의 네 번째 기사', publisher: '숙대 일보', thumbnail: thumbnailImage },
+      { title: '오늘의 다섯 번째 기사', publisher: '숙명 일보', thumbnail: thumbnailImage },
     ],
     week: [
-      { title: '이번 주 첫 번째 기사', publisher: 'TechCrunch', thumbnail: thumbnailImage },
-      { title: '이번 주 두 번째 기사', publisher: 'The Verge', thumbnail: thumbnailImage },
-      { title: '이번 주 세 번째 기사', publisher: 'Wired', thumbnail: thumbnailImage },
-      { title: '이번 주 네 번째 기사', publisher: 'CNET', thumbnail: thumbnailImage },
-      { title: '이번 주 다섯 번째 기사', publisher: 'Engadget', thumbnail: thumbnailImage },
+      { title: '이번 주 첫 번째 기사', publisher: '솔룩스 일보', thumbnail: thumbnailImage },
+      { title: '이번 주 두 번째 기사', publisher: '다코스 일보', thumbnail: thumbnailImage },
+      { title: '이번 주 세 번째 기사', publisher: '눈송이 일보', thumbnail: thumbnailImage },
+      { title: '이번 주 네 번째 기사', publisher: '숙대 일보', thumbnail: thumbnailImage },
+      { title: '이번 주 다섯 번째 기사', publisher: '숙명 일보', thumbnail: thumbnailImage },
     ],
     month: [
-      { title: '이번 달 첫 번째 기사', publisher: 'TechCrunch', thumbnail: thumbnailImage },
-      { title: '이번 달 두 번째 기사', publisher: 'The Verge', thumbnail: thumbnailImage },
-      { title: '이번 달 세 번째 기사', publisher: 'Wired', thumbnail: thumbnailImage },
-      { title: '이번 달 네 번째 기사', publisher: 'CNET', thumbnail: thumbnailImage },
-      { title: '이번 달 다섯 번째 기사', publisher: 'Engadget', thumbnail: thumbnailImage },
+      { title: '이번 달 첫 번째 기사', publisher: '솔룩스 일보', thumbnail: thumbnailImage },
+      { title: '이번 달 두 번째 기사', publisher: '다코스 일보', thumbnail: thumbnailImage },
+      { title: '이번 달 세 번째 기사', publisher: '눈송이 일보', thumbnail: thumbnailImage },
+      { title: '이번 달 네 번째 기사', publisher: '숙대 일보', thumbnail: thumbnailImage },
+      { title: '이번 달 다섯 번째 기사', publisher: '숙명 일보', thumbnail: thumbnailImage },
     ],
   };
 
@@ -40,88 +40,84 @@ const TrendScreen = () => {
   };
 
   return (
-    <View style={styles.container}>
-      {/* ReadIT 텍스트 추가 */}
-      <Text style={styles.title}>ReadIT</Text>
+    <SafeAreaView style={styles.safeAreaContainer}>
+      <ScrollView style={styles.container}>
+        {/* 주목해야 할 관심 직무 소식 텍스트 */}
+        <Text style={styles.subTitle}>주목해야 할 관심 직무 소식</Text>
 
-      {/* 주목해야 할 관심 직무 소식 텍스트 */}
-      <Text style={styles.subTitle}>주목해야 할 관심 직무 소식</Text>
+        {/* 썸네일 이미지가 들어갈 둥근 사각형 */}
+        <View style={styles.thumbnailContainer}>
+          <Image
+            source={thumbnailImage}  // 로컬 썸네일 이미지
+            style={styles.thumbnail}
+          />
+        </View>
 
-      {/* 썸네일 이미지가 들어갈 둥근 사각형 */}
-      <View style={styles.thumbnailContainer}>
-        <Image
-          source={thumbnailImage}  // 로컬 썸네일 이미지
-          style={styles.thumbnail}
-        />
-      </View>
+        {/* 이번 주 IT 키워드 클라우드 텍스트 */}
+        <Text style={styles.keywordTitle}>이번 주 IT 키워드 클라우드</Text>
 
-      {/* 이번 주 IT 키워드 클라우드 텍스트 */}
-      <Text style={styles.keywordTitle}>이번 주 IT 키워드 클라우드</Text>
+        {/* 워드 클라우드 이미지가 들어갈 사각형 */}
+        <View style={styles.wordCloudContainer}>
+          <Image
+            source={wordCloudImage}  // 로컬 워드 클라우드 이미지
+            style={styles.wordCloud}
+          />
+        </View>
 
-      {/* 워드 클라우드 이미지가 들어갈 사각형 */}
-      <View style={styles.wordCloudContainer}>
-        <Image
-          source={wordCloudImage}  // 로컬 워드 클라우드 이미지
-          style={styles.wordCloud}
-        />
-      </View>
+        {/* HOT한 IT 콘텐츠 확인하기 텍스트 */}
+        <Text style={styles.hotContentTitle}>HOT한 IT 콘텐츠 확인하기</Text>
 
-      {/* HOT한 IT 콘텐츠 확인하기 텍스트 */}
-      <Text style={styles.hotContentTitle}>HOT한 IT 콘텐츠 확인하기</Text>
-
-      {/* 탭 선택: 오늘, 이번 주, 이번 달 */}
-      <View style={styles.tabHeader}>
-        {['today', 'week', 'month'].map((tab) => (
-          <TouchableOpacity
-            key={tab}
-            onPress={() => handleTabChange(tab)}
-            style={[
-              styles.tabButton,
-              selectedTab === tab && styles.selectedTabButton,
-            ]}
-          >
-            <Text
+        {/* 탭 선택: 오늘, 이번 주, 이번 달 */}
+        <View style={styles.tabHeader}>
+          {['today', 'week', 'month'].map((tab) => (
+            <TouchableOpacity
+              key={tab}
+              onPress={() => handleTabChange(tab)}
               style={[
-                styles.tabText,
-                selectedTab === tab && styles.selectedTabText,
+                styles.tabButton,
+                selectedTab === tab && styles.selectedTabButton,
               ]}
             >
-              {tab === 'today' ? '오늘' : tab === 'week' ? '이번 주' : '이번 달'}
-            </Text>
-          </TouchableOpacity>
-        ))}
-      </View>
+              <Text
+                style={[
+                  styles.tabText,
+                  selectedTab === tab && styles.selectedTabText,
+                ]}
+              >
+                {tab === 'today' ? '오늘' : tab === 'week' ? '이번 주' : '이번 달'}
+              </Text>
+            </TouchableOpacity>
+          ))}
+        </View>
 
-      {/* 해당하는 콘텐츠 목록 표시 */}
-      <ScrollView style={styles.articleList}>
-        {hotArticles[selectedTab].map((article, index) => (
-          <View key={index} style={styles.articleItem}>
-            <Image source={article.thumbnail} style={styles.articleThumbnail} />
-            <View style={styles.articleTextContainer}>
-              <Text style={styles.articleTitle}>{article.title}</Text>
-              <Text style={styles.articlePublisher}>{article.publisher}</Text>
+        {/* 해당하는 콘텐츠 목록 표시 */}
+        <View style={styles.articleList}>
+          {hotArticles[selectedTab].map((article, index) => (
+            <View key={index} style={styles.articleItem}>
+              <Image source={article.thumbnail} style={styles.articleThumbnail} />
+              <View style={styles.articleTextContainer}>
+                <Text style={styles.articleTitle}>{article.title}</Text>
+                <Text style={styles.articlePublisher}>{article.publisher}</Text>
+              </View>
             </View>
-          </View>
-        ))}
+          ))}
+        </View>
       </ScrollView>
-    </View>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  safeAreaContainer: {
+    flex: 1,
+  },
   container: {
     flex: 1,
     paddingHorizontal: 20,
     paddingVertical: 40,
   },
-  title: {
-    fontSize: 32,
-    fontWeight: 'bold',
-    color: '#007BFF', // 파란색 글씨
-  },
   subTitle: {
     fontSize: 20,
-    marginTop: 20,
     marginBottom: 20,
     fontWeight: '600',
   },
@@ -192,7 +188,7 @@ const styles = StyleSheet.create({
   },
   articleItem: {
     flexDirection: 'row',
-    marginBottom: 15,
+    marginBottom: 10,
     borderBottomWidth: 1,
     borderBottomColor: '#f0f0f0', // 각 항목 구분선
     paddingBottom: 10,
