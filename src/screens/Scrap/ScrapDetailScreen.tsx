@@ -9,7 +9,6 @@ import {
   Switch,
   Modal,
   TextInput,
-  TouchableWithoutFeedback, // 임포트 추가
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 
@@ -235,8 +234,7 @@ const ScrapDetailScreen = ({route}) => {
         <View style={styles.modalOverlay}>
           <View style={styles.modalContainer}>
             <Text style={styles.modalTitle}>문장에 메모 추가하기</Text>
-            <Text style={styles.modalText}>{selectedText}</Text>{' '}
-            {/* Display selected text */}
+            <Text style={styles.modalText}>{selectedText}</Text>
             <TextInput
               style={styles.modalInput}
               placeholder="메모를 입력하세요..."
@@ -455,6 +453,15 @@ const styles = StyleSheet.create({
   },
   cancelButtonText: {
     color: '#333',
+  },
+  modalButtonContainer: {
+    marginTop: 24,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  modalButtonText: {
+    fontSize: 16,
+    color: 'black', // 버튼 텍스트 색상을 검정색으로 설정
   },
 });
 
