@@ -1,13 +1,6 @@
-import React, {useState} from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  Image,
-  TouchableOpacity,
-  ScrollView,
-  SafeAreaView,
-} from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, SafeAreaView } from 'react-native';
+import { useNavigation } from '@react-navigation/native'; // 추가된 부분
 
 // 임시 이미지들
 const thumbnailImage1 = require('../../img/thumbnail.png'); // 썸네일 이미지 1
@@ -19,6 +12,7 @@ const wordCloudImage = require('../../img/wordCloud.png'); // 워드 클라우�
 const TrendScreen = () => {
   const [selectedTab, setSelectedTab] = useState('today');
   const [currentThumbnail, setCurrentThumbnail] = useState(thumbnailImage1); // 기본 이미지 1 설정
+  const navigation = useNavigation(); // 네비게이션 훅 추가
 
   const hotArticles = {
     today: [
@@ -112,6 +106,14 @@ const TrendScreen = () => {
     setCurrentThumbnail(image); // 이미지 변경
   };
 
+  const handleArticlePress = (article) => {
+    // Pass article title and publisher to ArticleDetailScreen
+    navigation.navigate('ArticleDetailScreen', {
+      articleTitle: article.title,
+      articlePublisher: article.publisher,
+    });
+  };
+
   return (
     <SafeAreaView style={styles.safeAreaContainer}>
       <ScrollView
@@ -188,16 +190,13 @@ const TrendScreen = () => {
         {/* 해당하는 콘텐츠 목록 표시 */}
         <View style={styles.articleList}>
           {hotArticles[selectedTab].map((article, index) => (
-            <View key={index} style={styles.articleItem}>
-              <Image
-                source={article.thumbnail}
-                style={styles.articleThumbnail}
-              />
+            <TouchableOpacity key={index} onPress={() => handleArticlePress(article)} style={styles.articleItem}>
+              <Image source={article.thumbnail} style={styles.articleThumbnail} />
               <View style={styles.articleTextContainer}>
                 <Text style={styles.articleTitle}>{article.title}</Text>
                 <Text style={styles.articlePublisher}>{article.publisher}</Text>
               </View>
-            </View>
+            </TouchableOpacity>
           ))}
         </View>
       </ScrollView>

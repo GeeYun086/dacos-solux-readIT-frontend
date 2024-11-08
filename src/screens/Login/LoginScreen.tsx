@@ -1,18 +1,32 @@
-import React, {useContext} from 'react';
-import {
-  View,
-  Text,
-  TextInput,
-  StyleSheet,
-  Image,
-  TouchableOpacity,
-} from 'react-native';
-import {AuthContext} from '../../navigator/AppNavigator';
+import React, { useContext, useState } from 'react';
+import { View, Text, TextInput, StyleSheet, Image, TouchableOpacity, Alert } from 'react-native';
+import { AuthContext } from '../../navigator/AppNavigator';
 
 const logoTitle = require('../../img/logo.png'); // 로고 아이콘
 
-const LoginScreen = ({navigation}) => {
-  const {login} = useContext(AuthContext); // AuthContext에서 login 함수 사용
+const LoginScreen = ({ navigation }) => {
+  const { login } = useContext(AuthContext); // AuthContext에서 login 함수 사용
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [isTyping, setIsTyping] = useState(false); // 입력 중 여부 상태
+
+  const isValidEmail = (email) => {
+    // 이메일 형식 검사
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const handleLogin = () => {
+    if (!email || !password) {
+      Alert.alert("오류", "이메일과 비밀번호를 모두 입력해주세요.");
+      return;
+    }
+    if (!isValidEmail(email)) {
+      Alert.alert("오류", "유효한 이메일 형식을 입력해주세요.");
+      return;
+    }
+    login(); // 모든 조건이 만족되면 로그인 함수 호출
+  };
 
   return (
     <View style={styles.container}>
@@ -21,21 +35,32 @@ const LoginScreen = ({navigation}) => {
         style={styles.input}
         placeholder="이메일"
         placeholderTextColor="gray"
+        onFocus={() => setIsTyping(true)}
+        onBlur={() => setIsTyping(false)}
+        onChangeText={setEmail}
+        value={email}
       />
       <TextInput
         style={styles.input}
         placeholder="비밀번호"
         placeholderTextColor="gray"
         secureTextEntry
+        onFocus={() => setIsTyping(true)}
+        onBlur={() => setIsTyping(false)}
+        onChangeText={setPassword}
+        value={password}
       />
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.loginButton} onPress={login}>
-          <Text style={styles.loginButtonText}>로그인</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate('SignUpScreen')}>
-          <Text style={styles.signUpText}>회원가입하러 가기</Text>
-        </TouchableOpacity>
-      </View>
+      {/* 입력 중이 아닐 때만 버튼 표시 */}
+      {!isTyping && (
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
+            <Text style={styles.loginButtonText}>로그인</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate('SignUpScreen')}>
+            <Text style={styles.signUpText}>회원가입하러 가기</Text>
+          </TouchableOpacity>
+        </View>
+      )}
     </View>
   );
 };

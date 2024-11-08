@@ -1,12 +1,9 @@
-import React, {useContext} from 'react';
-import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
-import {AuthContext} from '../../navigator/AppNavigator';
+import React from 'react';
+import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 
 const logoTitle = require('../../img/logo.png'); // 로고 아이콘
 
-const ChooseInterestScreen = ({navigation}) => {
-  const {completeSignUp} = useContext(AuthContext);
-
+const ChooseInterestScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Image source={logoTitle} style={styles.logo} />
@@ -22,9 +19,6 @@ const ChooseInterestScreen = ({navigation}) => {
           onPress={() => navigation.navigate('JobSelectionScreen')}>
           <Text style={styles.signupButtonText}>직무보기</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={completeSignUp}>
-          <Text style={styles.selectLaterText}>다음에 선택하기</Text>
-        </TouchableOpacity>
       </View>
     </View>
   );
@@ -34,6 +28,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
+    justifyContent: 'center',
     paddingHorizontal: 20,
     paddingVertical: 40,
     backgroundColor: 'white',
@@ -54,7 +49,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     width: '100%',
     position: 'absolute',
-    bottom: 40,
+    bottom: 60,
     alignItems: 'center',
   },
   signupButton: {
@@ -68,11 +63,6 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 16,
     fontWeight: 'bold',
-  },
-  selectLaterText: {
-    color: 'black',
-    marginTop: 15,
-    fontSize: 14,
   },
 });
 
