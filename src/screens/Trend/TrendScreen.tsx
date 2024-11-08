@@ -16,33 +16,93 @@ const TrendScreen = () => {
 
   const hotArticles = {
     today: [
-      { title: '오늘의 첫 번째 기사', publisher: '솔룩스 일보', thumbnail: thumbnailImage1 },
-      { title: '오늘의 두 번째 기사', publisher: '다코스 일보', thumbnail: thumbnailImage1 },
-      { title: '오늘의 세 번째 기사', publisher: '눈송이 일보', thumbnail: thumbnailImage1 },
-      { title: '오늘의 네 번째 기사', publisher: '숙대 일보', thumbnail: thumbnailImage1 },
-      { title: '오늘의 다섯 번째 기사', publisher: '숙명 일보', thumbnail: thumbnailImage1 },
+      {
+        title: '오늘의 첫 번째 기사',
+        publisher: '솔룩스 일보',
+        thumbnail: thumbnailImage1,
+      },
+      {
+        title: '오늘의 두 번째 기사',
+        publisher: '다코스 일보',
+        thumbnail: thumbnailImage1,
+      },
+      {
+        title: '오늘의 세 번째 기사',
+        publisher: '눈송이 일보',
+        thumbnail: thumbnailImage1,
+      },
+      {
+        title: '오늘의 네 번째 기사',
+        publisher: '숙대 일보',
+        thumbnail: thumbnailImage1,
+      },
+      {
+        title: '오늘의 다섯 번째 기사',
+        publisher: '숙명 일보',
+        thumbnail: thumbnailImage1,
+      },
     ],
     week: [
-      { title: '이번 주 첫 번째 기사', publisher: '솔룩스 일보', thumbnail: thumbnailImage1 },
-      { title: '이번 주 두 번째 기사', publisher: '다코스 일보', thumbnail: thumbnailImage1 },
-      { title: '이번 주 세 번째 기사', publisher: '눈송이 일보', thumbnail: thumbnailImage1 },
-      { title: '이번 주 네 번째 기사', publisher: '숙대 일보', thumbnail: thumbnailImage1 },
-      { title: '이번 주 다섯 번째 기사', publisher: '숙명 일보', thumbnail: thumbnailImage1 },
+      {
+        title: '이번 주 첫 번째 기사',
+        publisher: '솔룩스 일보',
+        thumbnail: thumbnailImage1,
+      },
+      {
+        title: '이번 주 두 번째 기사',
+        publisher: '다코스 일보',
+        thumbnail: thumbnailImage1,
+      },
+      {
+        title: '이번 주 세 번째 기사',
+        publisher: '눈송이 일보',
+        thumbnail: thumbnailImage1,
+      },
+      {
+        title: '이번 주 네 번째 기사',
+        publisher: '숙대 일보',
+        thumbnail: thumbnailImage1,
+      },
+      {
+        title: '이번 주 다섯 번째 기사',
+        publisher: '숙명 일보',
+        thumbnail: thumbnailImage1,
+      },
     ],
     month: [
-      { title: '이번 달 첫 번째 기사', publisher: '솔룩스 일보', thumbnail: thumbnailImage1 },
-      { title: '이번 달 두 번째 기사', publisher: '다코스 일보', thumbnail: thumbnailImage1 },
-      { title: '이번 달 세 번째 기사', publisher: '눈송이 일보', thumbnail: thumbnailImage1 },
-      { title: '이번 달 네 번째 기사', publisher: '숙대 일보', thumbnail: thumbnailImage1 },
-      { title: '이번 달 다섯 번째 기사', publisher: '숙명 일보', thumbnail: thumbnailImage1 },
+      {
+        title: '이번 달 첫 번째 기사',
+        publisher: '솔룩스 일보',
+        thumbnail: thumbnailImage1,
+      },
+      {
+        title: '이번 달 두 번째 기사',
+        publisher: '다코스 일보',
+        thumbnail: thumbnailImage1,
+      },
+      {
+        title: '이번 달 세 번째 기사',
+        publisher: '눈송이 일보',
+        thumbnail: thumbnailImage1,
+      },
+      {
+        title: '이번 달 네 번째 기사',
+        publisher: '숙대 일보',
+        thumbnail: thumbnailImage1,
+      },
+      {
+        title: '이번 달 다섯 번째 기사',
+        publisher: '숙명 일보',
+        thumbnail: thumbnailImage1,
+      },
     ],
   };
 
-  const handleTabChange = (tab) => {
+  const handleTabChange = tab => {
     setSelectedTab(tab);
   };
 
-  const handleThumbnailChange = (image) => {
+  const handleThumbnailChange = image => {
     setCurrentThumbnail(image); // 이미지 변경
   };
 
@@ -56,24 +116,36 @@ const TrendScreen = () => {
 
   return (
     <SafeAreaView style={styles.safeAreaContainer}>
-      <ScrollView style={styles.container} contentContainerStyle={styles.scrollViewContent}>
+      <ScrollView
+        style={styles.container}
+        contentContainerStyle={styles.scrollViewContent}>
         <Text style={styles.subTitle}>주목해야 할 관심 직무 소식</Text>
 
         {/* 썸네일 이미지가 들어갈 둥근 사각형 */}
         <View style={styles.thumbnailContainer}>
           <Image
-            source={currentThumbnail}  // 선택된 이미지
+            source={currentThumbnail} // 선택된 이미지
             style={styles.thumbnail}
           />
         </View>
 
         {/* 작은 원들 */}
         <View style={styles.dotContainer}>
-          {[thumbnailImage1, thumbnailImage2, thumbnailImage3].map((image, index) => (
-            <TouchableOpacity key={index} onPress={() => handleThumbnailChange(image)} style={styles.dot}>
-              <View style={[styles.dotIndicator, currentThumbnail === image && styles.selectedDot]} />
-            </TouchableOpacity>
-          ))}
+          {[thumbnailImage1, thumbnailImage2, thumbnailImage3].map(
+            (image, index) => (
+              <TouchableOpacity
+                key={index}
+                onPress={() => handleThumbnailChange(image)}
+                style={styles.dot}>
+                <View
+                  style={[
+                    styles.dotIndicator,
+                    currentThumbnail === image && styles.selectedDot,
+                  ]}
+                />
+              </TouchableOpacity>
+            ),
+          )}
         </View>
 
         {/* 이번 주 IT 키워드 클라우드 텍스트 */}
@@ -82,7 +154,7 @@ const TrendScreen = () => {
         {/* 워드 클라우드 이미지가 들어갈 사각형 */}
         <View style={styles.wordCloudContainer}>
           <Image
-            source={wordCloudImage}  // 로컬 워드 클라우드 이미지
+            source={wordCloudImage} // 로컬 워드 클라우드 이미지
             style={styles.wordCloud}
           />
         </View>
@@ -92,14 +164,24 @@ const TrendScreen = () => {
 
         {/* 탭 선택: 오늘, 이번 주, 이번 달 */}
         <View style={styles.tabHeader}>
-          {['today', 'week', 'month'].map((tab) => (
+          {['today', 'week', 'month'].map(tab => (
             <TouchableOpacity
               key={tab}
               onPress={() => handleTabChange(tab)}
-              style={[styles.tabButton, selectedTab === tab && styles.selectedTabButton]}
-            >
-              <Text style={[styles.tabText, selectedTab === tab && styles.selectedTabText]}>
-                {tab === 'today' ? '오늘' : tab === 'week' ? '이번 주' : '이번 달'}
+              style={[
+                styles.tabButton,
+                selectedTab === tab && styles.selectedTabButton,
+              ]}>
+              <Text
+                style={[
+                  styles.tabText,
+                  selectedTab === tab && styles.selectedTabText,
+                ]}>
+                {tab === 'today'
+                  ? '오늘'
+                  : tab === 'week'
+                  ? '이번 주'
+                  : '이번 달'}
               </Text>
             </TouchableOpacity>
           ))}
@@ -130,6 +212,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 20,
     paddingVertical: 20,
+    backgroundColor: 'white',
   },
   scrollViewContent: {
     paddingBottom: 80, // Ensure there's enough space at the bottom
@@ -164,7 +247,7 @@ const styles = StyleSheet.create({
   dotIndicator: {
     width: 10,
     height: 10,
-    borderRadius: 5, // 동그란 원
+    borderRadius: 10, // 동그란 원
     backgroundColor: '#ccc', // 기본 회색
   },
   selectedDot: {
@@ -182,24 +265,22 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   keywordTitle: {
-      fontSize: 20,
-      marginTop: 30,
-      fontWeight: '600',
+    fontSize: 20,
+    marginTop: 30,
+    fontWeight: '600',
   },
   wordCloudContainer: {
-      width: '100%',
-      height: 200,
-      borderRadius: 15,
-      overflow: 'hidden',
-      backgroundColor: '#f0f0f0', // 배경 색상
-      justifyContent: 'center',
-      alignItems: 'center',
-      marginTop: 20,
+    width: '100%',
+    height: 200,
+    borderRadius: 15,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 20,
   },
   wordCloud: {
-      width: '100%',
-      height: '100%',
-      resizeMode: 'contain', // 이미지가 박스 안에 비율에 맞게 들어가도록 설정
+    width: '100%',
+    height: '100%',
+    resizeMode: 'contain', // 이미지가 박스 안에 비율에 맞게 들어가도록 설정
   },
   tabButton: {
     paddingVertical: 10,

@@ -36,7 +36,6 @@ const SignUpScreen = ({ navigation }) => {
       <Image source={logoTitle} style={styles.logo} />
       <Text style={styles.welcomeText}>리딧에 오신 것을 환영해요!</Text>
       <Text style={styles.infoText}>관심 가는 IT 산업 트렌드를{'\n'}빠르게 모아 요약해드립니다</Text>
-
       <TextInput
         style={styles.input}
         placeholder="이름"
@@ -97,6 +96,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 20,
     paddingVertical: 40,
+    backgroundColor: 'white',
   },
   welcomeText: {
     fontSize: 18,

@@ -11,8 +11,12 @@ const ChooseInterestScreen = ({ navigation }) => {
       <Text style={styles.subText}>리딧은 맞춤형 IT 콘텐츠를 추천합니다</Text>
 
       <View style={styles.buttonContainer}>
-        <Text style={styles.subText}>*선택한 직무를 중심으로 IT 기사가 추천됩니다</Text>
-        <TouchableOpacity style={styles.signupButton} onPress={() => navigation.navigate('JobSelectionScreen')}>
+        <Text style={styles.subText}>
+          *선택한 직무를 중심으로 IT 기사가 추천됩니다
+        </Text>
+        <TouchableOpacity
+          style={styles.signupButton}
+          onPress={() => navigation.navigate('JobSelectionScreen')}>
           <Text style={styles.signupButtonText}>직무보기</Text>
         </TouchableOpacity>
       </View>
@@ -27,6 +31,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingHorizontal: 20,
     paddingVertical: 40,
+    backgroundColor: 'white',
   },
   logo: {
     marginBottom: 40,
