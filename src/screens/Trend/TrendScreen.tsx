@@ -6,6 +6,8 @@ const thumbnailImage1 = require('../../img/thumbnail.png'); // 썸네일 이미�
 const thumbnailImage2 = require('../../img/wordCloud.png'); // 썸네일 이미지 2
 const thumbnailImage3 = require('../../img/logo.png'); // 썸네일 이미지 3
 
+const wordCloudImage = require('../../img/wordCloud.png'); // 워드 클라우드 이미지
+
 const TrendScreen = () => {
   const [selectedTab, setSelectedTab] = useState('today');
   const [currentThumbnail, setCurrentThumbnail] = useState(thumbnailImage1); // 기본 이미지 1 설정
@@ -62,6 +64,17 @@ const TrendScreen = () => {
               <View style={[styles.dotIndicator, currentThumbnail === image && styles.selectedDot]} />
             </TouchableOpacity>
           ))}
+        </View>
+
+        {/* 이번 주 IT 키워드 클라우드 텍스트 */}
+        <Text style={styles.keywordTitle}>이번 주 IT 키워드 클라우드</Text>
+
+        {/* 워드 클라우드 이미지가 들어갈 사각형 */}
+        <View style={styles.wordCloudContainer}>
+          <Image
+            source={wordCloudImage}  // 로컬 워드 클라우드 이미지
+            style={styles.wordCloud}
+          />
         </View>
 
         {/* HOT한 IT 콘텐츠 확인하기 */}
@@ -157,6 +170,26 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     marginTop: 20,
     marginBottom: 20,
+  },
+  keywordTitle: {
+      fontSize: 20,
+      marginTop: 30,
+      fontWeight: '600',
+  },
+  wordCloudContainer: {
+      width: '100%',
+      height: 200,
+      borderRadius: 15,
+      overflow: 'hidden',
+      backgroundColor: '#f0f0f0', // 배경 색상
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginTop: 20,
+  },
+  wordCloud: {
+      width: '100%',
+      height: '100%',
+      resizeMode: 'contain', // 이미지가 박스 안에 비율에 맞게 들어가도록 설정
   },
   tabButton: {
     paddingVertical: 10,
