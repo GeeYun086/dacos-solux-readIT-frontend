@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { View, Text, TextInput, StyleSheet, Image, TouchableOpacity, Alert } from 'react-native';
 import { AuthContext } from '../../navigator/AppNavigator';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const logoTitle = require('../../img/logo.png'); // 로고 아이콘
 
@@ -16,7 +17,7 @@ const LoginScreen = ({ navigation }) => {
     return emailRegex.test(email);
   };
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     if (!email || !password) {
       Alert.alert("오류", "이메일과 비밀번호를 모두 입력해주세요.");
       return;
@@ -25,7 +26,39 @@ const LoginScreen = ({ navigation }) => {
       Alert.alert("오류", "유효한 이메일 형식을 입력해주세요.");
       return;
     }
-    login(); // 모든 조건이 만족되면 로그인 함수 호출
+
+    try {
+      const response = await fetch('http://43.200.64.115:8081/api/v1/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        // 로그인 성공 시 토큰과 사용자 정보 받아오기
+        const { token, userInfo } = data.data;
+        console.log(token);
+
+        await AsyncStorage.setItem('userToken', token);
+        await AsyncStorage.setItem('userInfo', JSON.stringify(userInfo));
+
+        // 로그인 성공 후 AuthContext에 사용자 정보와 토큰 저장
+        login(token, userInfo); // Assumed that your context has a method to handle this
+
+        // MainScreen으로 이동하지 않고 login() 함수만 호출
+      } else {
+        Alert.alert("로그인 실패", data.message);
+      }
+    } catch (error) {
+      Alert.alert("오류", "서버와 연결할 수 없습니다.");
+    }
   };
 
   return (
