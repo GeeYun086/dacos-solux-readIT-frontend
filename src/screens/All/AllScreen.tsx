@@ -36,9 +36,6 @@ const articles = [
 const AllScreen = () => {
   return (
     <View style={styles.container}>
-      {/* ReadIT 텍스트 추가 */}
-      <Text style={styles.title}>ReadIT</Text>
-
       {/* IT 관련 콘텐츠 모두 확인하기 텍스트 */}
       <Text style={styles.subTitle}>IT 관련 콘텐츠 모두 확인하기</Text>
 
@@ -64,14 +61,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 40,
   },
-  title: {
-    fontSize: 32,
-    fontWeight: 'bold',
-    color: '#007BFF', // 파란색 글씨
-  },
   subTitle: {
     fontSize: 20,
-    marginTop: 20,
     marginBottom: 20,
     fontWeight: '600',
   },

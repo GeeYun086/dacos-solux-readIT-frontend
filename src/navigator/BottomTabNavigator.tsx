@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image } from 'react-native';
+import { Text, Image } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Trend from '../screens/Trend/TrendScreen';  // 트렌드 화면
 import All from '../screens/All/AllScreen';        // 전체 화면
@@ -10,7 +10,6 @@ const trendIcon = require('../img/trend.png');   // 트렌드 아이콘
 const allIcon = require('../img/all.png');       // 전체 아이콘
 const scrapIcon = require('../img/scrap.png');   // 스크랩 아이콘
 const myPageIcon = require('../img/myPage.png'); // 마이페이지 아이콘
-const logoTitle = require('../img/logo.png');  // 로고 아이콘
 
 const Tab = createBottomTabNavigator();
 
@@ -42,13 +41,14 @@ const BottomTabNavigator = () => {
         tabBarActiveTintColor: 'black',
         tabBarInactiveTintColor: 'gray',
         headerTitle: () => (
-          <Image
-            source={logoTitle}
-            style={{ width: 150, height: 50 }}
-            resizeMode="contain"
-          />
-        ),
-        headerTitleAlign: 'center',
+          <Text style={{ fontSize: 20, color: '#007BFF' }}>
+            ReadIT
+           </Text>
+          ),
+          headerTitleAlign: 'left',  // 왼쪽 정렬
+          headerStyle: {
+          height: 50,  // 헤더 높이 줄이기
+          },
       })}
     >
       <Tab.Screen name="Trend" component={Trend} />
