@@ -61,7 +61,7 @@ const MyPageScreen = () => {
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 20,
-    paddingVertical: 40,
+    paddingVertical: 20,
   },
   userInfoText: {
     fontSize: 16,

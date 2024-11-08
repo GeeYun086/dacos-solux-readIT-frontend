@@ -2,55 +2,68 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, SafeAreaView } from 'react-native';
 
 // 임시 이미지들
-const thumbnailImage = require('../../img/thumbnail.png'); // 썸네일 이미지
+const thumbnailImage1 = require('../../img/thumbnail.png'); // 썸네일 이미지 1
+const thumbnailImage2 = require('../../img/wordCloud.png'); // 썸네일 이미지 2
+const thumbnailImage3 = require('../../img/logo.png'); // 썸네일 이미지 3
+
 const wordCloudImage = require('../../img/wordCloud.png'); // 워드 클라우드 이미지
 
 const TrendScreen = () => {
-  // 현재 선택된 탭 상태 관리
   const [selectedTab, setSelectedTab] = useState('today');
+  const [currentThumbnail, setCurrentThumbnail] = useState(thumbnailImage1); // 기본 이미지 1 설정
 
-  // 핫한 IT 콘텐츠 예시 데이터
   const hotArticles = {
     today: [
-      { title: '오늘의 첫 번째 기사', publisher: '솔룩스 일보', thumbnail: thumbnailImage },
-      { title: '오늘의 두 번째 기사', publisher: '다코스 일보', thumbnail: thumbnailImage },
-      { title: '오늘의 세 번째 기사', publisher: '눈송이 일보', thumbnail: thumbnailImage },
-      { title: '오늘의 네 번째 기사', publisher: '숙대 일보', thumbnail: thumbnailImage },
-      { title: '오늘의 다섯 번째 기사', publisher: '숙명 일보', thumbnail: thumbnailImage },
+      { title: '오늘의 첫 번째 기사', publisher: '솔룩스 일보', thumbnail: thumbnailImage1 },
+      { title: '오늘의 두 번째 기사', publisher: '다코스 일보', thumbnail: thumbnailImage1 },
+      { title: '오늘의 세 번째 기사', publisher: '눈송이 일보', thumbnail: thumbnailImage1 },
+      { title: '오늘의 네 번째 기사', publisher: '숙대 일보', thumbnail: thumbnailImage1 },
+      { title: '오늘의 다섯 번째 기사', publisher: '숙명 일보', thumbnail: thumbnailImage1 },
     ],
     week: [
-      { title: '이번 주 첫 번째 기사', publisher: '솔룩스 일보', thumbnail: thumbnailImage },
-      { title: '이번 주 두 번째 기사', publisher: '다코스 일보', thumbnail: thumbnailImage },
-      { title: '이번 주 세 번째 기사', publisher: '눈송이 일보', thumbnail: thumbnailImage },
-      { title: '이번 주 네 번째 기사', publisher: '숙대 일보', thumbnail: thumbnailImage },
-      { title: '이번 주 다섯 번째 기사', publisher: '숙명 일보', thumbnail: thumbnailImage },
+      { title: '이번 주 첫 번째 기사', publisher: '솔룩스 일보', thumbnail: thumbnailImage1 },
+      { title: '이번 주 두 번째 기사', publisher: '다코스 일보', thumbnail: thumbnailImage1 },
+      { title: '이번 주 세 번째 기사', publisher: '눈송이 일보', thumbnail: thumbnailImage1 },
+      { title: '이번 주 네 번째 기사', publisher: '숙대 일보', thumbnail: thumbnailImage1 },
+      { title: '이번 주 다섯 번째 기사', publisher: '숙명 일보', thumbnail: thumbnailImage1 },
     ],
     month: [
-      { title: '이번 달 첫 번째 기사', publisher: '솔룩스 일보', thumbnail: thumbnailImage },
-      { title: '이번 달 두 번째 기사', publisher: '다코스 일보', thumbnail: thumbnailImage },
-      { title: '이번 달 세 번째 기사', publisher: '눈송이 일보', thumbnail: thumbnailImage },
-      { title: '이번 달 네 번째 기사', publisher: '숙대 일보', thumbnail: thumbnailImage },
-      { title: '이번 달 다섯 번째 기사', publisher: '숙명 일보', thumbnail: thumbnailImage },
+      { title: '이번 달 첫 번째 기사', publisher: '솔룩스 일보', thumbnail: thumbnailImage1 },
+      { title: '이번 달 두 번째 기사', publisher: '다코스 일보', thumbnail: thumbnailImage1 },
+      { title: '이번 달 세 번째 기사', publisher: '눈송이 일보', thumbnail: thumbnailImage1 },
+      { title: '이번 달 네 번째 기사', publisher: '숙대 일보', thumbnail: thumbnailImage1 },
+      { title: '이번 달 다섯 번째 기사', publisher: '숙명 일보', thumbnail: thumbnailImage1 },
     ],
   };
 
-  // 탭 클릭 시 상태 업데이트 함수
   const handleTabChange = (tab) => {
     setSelectedTab(tab);
   };
 
+  const handleThumbnailChange = (image) => {
+    setCurrentThumbnail(image); // 이미지 변경
+  };
+
   return (
     <SafeAreaView style={styles.safeAreaContainer}>
-      <ScrollView style={styles.container}>
-        {/* 주목해야 할 관심 직무 소식 텍스트 */}
+      <ScrollView style={styles.container} contentContainerStyle={styles.scrollViewContent}>
         <Text style={styles.subTitle}>주목해야 할 관심 직무 소식</Text>
 
         {/* 썸네일 이미지가 들어갈 둥근 사각형 */}
         <View style={styles.thumbnailContainer}>
           <Image
-            source={thumbnailImage}  // 로컬 썸네일 이미지
+            source={currentThumbnail}  // 선택된 이미지
             style={styles.thumbnail}
           />
+        </View>
+
+        {/* 작은 원들 */}
+        <View style={styles.dotContainer}>
+          {[thumbnailImage1, thumbnailImage2, thumbnailImage3].map((image, index) => (
+            <TouchableOpacity key={index} onPress={() => handleThumbnailChange(image)} style={styles.dot}>
+              <View style={[styles.dotIndicator, currentThumbnail === image && styles.selectedDot]} />
+            </TouchableOpacity>
+          ))}
         </View>
 
         {/* 이번 주 IT 키워드 클라우드 텍스트 */}
@@ -64,7 +77,7 @@ const TrendScreen = () => {
           />
         </View>
 
-        {/* HOT한 IT 콘텐츠 확인하기 텍스트 */}
+        {/* HOT한 IT 콘텐츠 확인하기 */}
         <Text style={styles.hotContentTitle}>HOT한 IT 콘텐츠 확인하기</Text>
 
         {/* 탭 선택: 오늘, 이번 주, 이번 달 */}
@@ -73,17 +86,9 @@ const TrendScreen = () => {
             <TouchableOpacity
               key={tab}
               onPress={() => handleTabChange(tab)}
-              style={[
-                styles.tabButton,
-                selectedTab === tab && styles.selectedTabButton,
-              ]}
+              style={[styles.tabButton, selectedTab === tab && styles.selectedTabButton]}
             >
-              <Text
-                style={[
-                  styles.tabText,
-                  selectedTab === tab && styles.selectedTabText,
-                ]}
-              >
+              <Text style={[styles.tabText, selectedTab === tab && styles.selectedTabText]}>
                 {tab === 'today' ? '오늘' : tab === 'week' ? '이번 주' : '이번 달'}
               </Text>
             </TouchableOpacity>
@@ -114,7 +119,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 20,
-    paddingVertical: 40,
+    paddingVertical: 20,
+  },
+  scrollViewContent: {
+    paddingBottom: 80, // Ensure there's enough space at the bottom
   },
   subTitle: {
     fontSize: 20,
@@ -126,7 +134,7 @@ const styles = StyleSheet.create({
     height: 200,
     borderRadius: 15, // 둥근 사각형
     overflow: 'hidden', // 이미지가 넘칠 경우 잘라냄
-    backgroundColor: '#f0f0f0', // 배경 색상 (썸네일 이미지가 로드되지 않으면 대체 배경)
+    backgroundColor: '#f0f0f0', // 배경 색상
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -135,25 +143,22 @@ const styles = StyleSheet.create({
     height: '100%',
     resizeMode: 'cover', // 이미지가 박스 크기에 맞게 잘리거나 비율에 맞게 맞춰짐
   },
-  keywordTitle: {
-    fontSize: 20,
-    marginTop: 30,
-    fontWeight: '600',
-  },
-  wordCloudContainer: {
-    width: '100%',
-    height: 200,
-    borderRadius: 15,
-    overflow: 'hidden',
-    backgroundColor: '#f0f0f0', // 배경 색상
+  dotContainer: {
+    flexDirection: 'row',
     justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 20,
+    marginTop: 10,
   },
-  wordCloud: {
-    width: '100%',
-    height: '100%',
-    resizeMode: 'contain', // 이미지가 박스 안에 비율에 맞게 들어가도록 설정
+  dot: {
+    marginHorizontal: 5,
+  },
+  dotIndicator: {
+    width: 10,
+    height: 10,
+    borderRadius: 5, // 동그란 원
+    backgroundColor: '#ccc', // 기본 회색
+  },
+  selectedDot: {
+    backgroundColor: '#007BFF', // 선택된 원 파란색
   },
   hotContentTitle: {
     fontSize: 20,
@@ -166,22 +171,42 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginBottom: 20,
   },
+  keywordTitle: {
+      fontSize: 20,
+      marginTop: 30,
+      fontWeight: '600',
+  },
+  wordCloudContainer: {
+      width: '100%',
+      height: 200,
+      borderRadius: 15,
+      overflow: 'hidden',
+      backgroundColor: '#f0f0f0', // 배경 색상
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginTop: 20,
+  },
+  wordCloud: {
+      width: '100%',
+      height: '100%',
+      resizeMode: 'contain', // 이미지가 박스 안에 비율에 맞게 들어가도록 설정
+  },
   tabButton: {
     paddingVertical: 10,
     paddingHorizontal: 15,
     borderRadius: 20,
     borderWidth: 1,
-    borderColor: '#007BFF', // 파란색 테두리
+    borderColor: '#007BFF',
   },
   selectedTabButton: {
-    backgroundColor: '#007BFF', // 선택된 탭 배경 파란색
+    backgroundColor: '#007BFF',
   },
   tabText: {
     fontSize: 16,
-    color: '#007BFF', // 기본 파란색 텍스트
+    color: '#007BFF',
   },
   selectedTabText: {
-    color: 'white', // 선택된 탭 텍스트 흰색
+    color: 'white',
   },
   articleList: {
     marginTop: 20,
@@ -190,13 +215,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginBottom: 10,
     borderBottomWidth: 1,
-    borderBottomColor: '#f0f0f0', // 각 항목 구분선
+    borderBottomColor: '#f0f0f0',
     paddingBottom: 10,
   },
   articleThumbnail: {
     width: 60,
     height: 60,
-    borderRadius: 5, // 썸네일의 작은 원형 이미지
+    borderRadius: 5,
     marginRight: 10,
   },
   articleTextContainer: {
