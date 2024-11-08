@@ -6,20 +6,29 @@ import {
   TouchableOpacity,
   StyleSheet,
   ScrollView,
+  Switch,
   Modal,
-  TouchableWithoutFeedback,
+  TextInput,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 
 const ScrapDetailScreen = ({route}) => {
   const {articleTitle, articlePublisher} = route.params;
   const navigation = useNavigation();
-  const [isModalVisible, setModalVisible] = useState(false);
-  const [highlightedText, setHighlightedText] = useState([]);
   const [isHighlightMode, setHighlightMode] = useState(false); // 형광펜 모드 상태
+  const [isMemoMode, setMemoMode] = useState(false); // 메모 모드 상태
+  const [highlightedText, setHighlightedText] = useState([]); // 형광펜으로 하이라이트된 텍스트 저장
+  const [isModalVisible, setModalVisible] = useState(false); // 모달 상태
+  const [selectedText, setSelectedText] = useState(''); // 선택된 텍스트 저장
+  const [memoText, setMemoText] = useState(''); // 메모 내용
+  const [memoedText, setMemoedText] = useState([]); // 메모가 저장된 텍스트
 
-  const toggleModal = () => {
-    setModalVisible(!isModalVisible);
+  const handleHighlightMode = () => {
+    setHighlightMode(!isHighlightMode); // 형광펜 모드 토글
+  };
+
+  const handleMemoMode = () => {
+    setMemoMode(!isMemoMode); // 메모 모드 토글
   };
 
   const handleTextPress = text => {
@@ -31,14 +40,22 @@ const ScrapDetailScreen = ({route}) => {
         setHighlightedText([...highlightedText, text]);
       }
     }
+
+    if (isMemoMode) {
+      // 메모 모드일 때 텍스트를 선택하고 모달 띄우기
+      setSelectedText(text);
+      setModalVisible(true);
+    }
   };
 
-  const renderHighlightedText = (text, isHighlighted) => {
-    return isHighlighted ? (
-      <Text style={[styles.highlightedText, styles.summaryText]}>{text}</Text>
-    ) : (
-      <Text style={styles.summaryText}>{text}</Text>
-    );
+  const renderHighlightedText = (text, isHighlighted, hasMemo) => {
+    const textStyle = [
+      isHighlighted && styles.highlightedText,
+      hasMemo && styles.memoedText,
+      styles.summaryText,
+    ];
+
+    return <Text style={textStyle}>{text}</Text>;
   };
 
   const splitSummaryText = text => {
@@ -46,11 +63,16 @@ const ScrapDetailScreen = ({route}) => {
       const trimmedSentence = sentence.trim();
       if (trimmedSentence.length > 0) {
         const isHighlighted = highlightedText.includes(trimmedSentence);
+        const hasMemo = memoedText.includes(trimmedSentence);
         return (
           <TouchableOpacity
             key={index}
             onPress={() => handleTextPress(trimmedSentence)}>
-            {renderHighlightedText(trimmedSentence + '.', isHighlighted)}
+            {renderHighlightedText(
+              trimmedSentence + '.',
+              isHighlighted,
+              hasMemo,
+            )}
           </TouchableOpacity>
         );
       }
@@ -58,14 +80,17 @@ const ScrapDetailScreen = ({route}) => {
     });
   };
 
-  const handleHighlightMode = () => {
-    setHighlightMode(!isHighlightMode); // 형광펜 모드 토글
-    toggleModal(); // 모달 닫기
+  const handleSaveMemo = () => {
+    // Save memo text and close the modal
+    console.log(`Saved memo for "${selectedText}": ${memoText}`);
+    setMemoedText([...memoedText, selectedText]);
+    setModalVisible(false);
+    setMemoText(''); // Clear memo input
   };
 
   return (
     <View style={styles.container}>
-      {/* Header with "내 스크랩" and "More" button */}
+      {/* Header with "내 스크랩" */}
       <View style={styles.header}>
         <TouchableOpacity
           onPress={() => navigation.goBack()}
@@ -77,12 +102,27 @@ const ScrapDetailScreen = ({route}) => {
           <Text style={styles.headerText}>내 스크랩</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={toggleModal} style={styles.moreButton}>
-          <Image
-            source={require('../../img/more.png')}
-            style={styles.moreImage}
-          />
-        </TouchableOpacity>
+        <View style={styles.toggleContainer}>
+          <View style={styles.toggleItem}>
+            <Switch
+              value={isHighlightMode}
+              onValueChange={handleHighlightMode}
+              trackColor={{false: '#f1f1f1', true: '#4e92f0'}}
+              thumbColor={isHighlightMode ? '#ffffff' : '#f4f3f4'}
+            />
+            <Text style={styles.toggleLabel}>형광펜</Text>
+          </View>
+
+          <View style={styles.toggleItem}>
+            <Switch
+              value={isMemoMode}
+              onValueChange={handleMemoMode}
+              trackColor={{false: '#f1f1f1', true: '#4e92f0'}}
+              thumbColor={isMemoMode ? '#ffffff' : '#f4f3f4'}
+            />
+            <Text style={styles.toggleLabel}>메모</Text>
+          </View>
+        </View>
       </View>
 
       <ScrollView contentContainerStyle={styles.content}>
@@ -125,10 +165,8 @@ const ScrapDetailScreen = ({route}) => {
           )}
         </Text>
         <Text style={styles.mindmap}>MY 마인드맵</Text>
-        <Text style={styles.summary}>
-          {splitSummaryText(
-            '아직 등록된 MY 마인드맵이 없습니다. 새로 등록하시겠습니까?',
-          )}
+        <Text style={styles.mindmaptext}>
+          아직 등록된 MY 마인드맵이 없습니다. 새로 등록하시겠습니까?
         </Text>
         {/* Button to Create Mind Map */}
         <TouchableOpacity style={styles.makeMindMapButton}>
@@ -139,28 +177,32 @@ const ScrapDetailScreen = ({route}) => {
         </TouchableOpacity>
       </ScrollView>
 
-      {/* Modal for More Options */}
+      {/* Memo Modal */}
       <Modal
+        transparent={true}
+        animationType="slide"
         visible={isModalVisible}
-        transparent
-        animationType="fade"
-        onRequestClose={toggleModal}>
-        <TouchableWithoutFeedback onPress={toggleModal}>
-          <View style={styles.modalOverlay}>
-            <TouchableWithoutFeedback>
-              <View style={styles.modalContent}>
-                <TouchableOpacity
-                  style={styles.modalOption}
-                  onPress={handleHighlightMode}>
-                  <Text style={styles.modalOptionText}>형광펜</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.modalOption} onPress={() => {}}>
-                  <Text style={styles.modalOptionText}>메모 추가</Text>
-                </TouchableOpacity>
-              </View>
-            </TouchableWithoutFeedback>
+        onRequestClose={() => setModalVisible(false)}>
+        <View style={styles.modalOverlay}>
+          <View style={styles.modalContainer}>
+            <Text style={styles.modalTitle}>문장에 메모 추가하기</Text>
+            <Text style={styles.modalText}>{selectedText}</Text>
+            <TextInput
+              style={styles.modalInput}
+              placeholder="메모를 입력하세요..."
+              value={memoText}
+              onChangeText={setMemoText}
+            />
+            <View style={styles.modalButtonContainer}>
+              <TouchableOpacity onPress={() => setModalVisible(false)}>
+                <Text style={styles.modalButtonText}>취소</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={handleSaveMemo}>
+                <Text style={styles.modalButtonText}>저장</Text>
+              </TouchableOpacity>
+            </View>
           </View>
-        </TouchableWithoutFeedback>
+        </View>
       </Modal>
     </View>
   );
@@ -169,7 +211,7 @@ const ScrapDetailScreen = ({route}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
+    padding: 20,
     backgroundColor: 'white',
   },
   header: {
@@ -191,67 +233,79 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
   },
-  moreButton: {
-    padding: 8,
+  toggleContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
-  moreImage: {
-    width: 24,
-    height: 24,
+  toggleItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginRight: 15,
+  },
+  toggleLabel: {
+    marginLeft: 5,
+    fontSize: 14,
   },
   content: {
-    paddingBottom: 16,
+    paddingBottom: 20,
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
-    marginVertical: 12,
+    marginBottom: 10,
   },
   publisherContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginVertical: 12,
+    marginBottom: 10,
   },
   publisher: {
-    fontSize: 15,
-    color: 'black',
+    fontSize: 12,
+    color: 'gray',
     marginRight: 10,
   },
   date: {
-    fontSize: 15,
+    fontSize: 12,
     color: 'gray',
-    marginRight: 120,
   },
   iconsContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+    marginLeft: 'auto',
   },
   icon: {
     width: 20,
     height: 20,
-    marginHorizontal: 4,
+    marginHorizontal: 5,
   },
   iconText: {
-    fontSize: 15,
-    color: 'black',
-    marginHorizontal: 4,
+    fontSize: 12,
+    color: 'gray',
   },
   thumbnailImage: {
     width: '100%',
     height: 200,
+    resizeMode: 'cover',
     marginBottom: 20,
   },
   gotoArticleButton: {
-    alignSelf: 'flex-end',
+    flexDirection: 'row',
+    justifyContent: 'flex-end', // 오른쪽 정렬
     marginBottom: 20,
   },
   gotoArticleImage: {
-    width: 108,
-    height: 34,
+    width: 143,
+    height: 45,
   },
   mindmap: {
     fontSize: 20,
     fontWeight: 'bold',
-    marginVertical: 10,
+    marginBottom: 10,
+  },
+  mindmaptext: {
+    fontSize: 16,
+    marginBottom: 10,
+    color: 'gray',
   },
   summary: {
     fontSize: 16,
@@ -259,38 +313,64 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   makeMindMapButton: {
-    alignSelf: 'flex-end',
+    flexDirection: 'row',
+    justifyContent: 'flex-end', // 오른쪽 정렬
+    marginBottom: 20,
   },
   makeMindMapImage: {
-    width: 124,
-    height: 30,
+    width: 165,
+    height: 40,
+  },
+  highlightedText: {
+    backgroundColor: '#FFFF00', // Highlight color
+  },
+  memoedText: {
+    textDecorationLine: 'underline',
+    textDecorationColor: 'red', // 텍스트에 파란색 밑줄 추가
   },
   modalOverlay: {
     flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)', // Dark overlay
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
     justifyContent: 'center',
     alignItems: 'center',
   },
-  modalContent: {
-    width: 250,
+  modalContainer: {
+    width: '80%',
     backgroundColor: 'white',
     padding: 20,
-    borderRadius: 8,
+    borderRadius: 10,
     alignItems: 'center',
   },
-  modalOption: {
-    padding: 10,
-    marginVertical: 5,
+  modalTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 10,
   },
-  modalOptionText: {
+  modalText: {
+    fontSize: 14,
+    color: 'blue',
+    marginBottom: 16,
+    marginTop: 12,
+    textAlign: 'left',
+  },
+  modalInput: {
+    width: '100%',
+    height: 40,
+    borderColor: 'gray',
+    borderWidth: 1,
+    borderRadius: 5,
+    padding: 5,
+    marginBottom: 10,
+  },
+  modalButtonContainer: {
+    marginTop: 24,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+  },
+  modalButtonText: {
     fontSize: 16,
-    color: 'black',
-  },
-  highlightedText: {
-    backgroundColor: 'yellow',
-  },
-  summaryText: {
-    fontSize: 16,
+    color: 'black', // 버튼 텍스트 색상을 검정색으로 설정
   },
 });
 
