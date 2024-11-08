@@ -1,11 +1,11 @@
-import React, { useState, createContext } from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import React, {useState, createContext} from 'react';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 // 로그인 화면 import
 import LoginScreen from '../screens/Login/LoginScreen';
 import SignUpScreen from '../screens/Login/SignUpScreen';
-import ChooseInterestScreen from '../screens/Login/ChooseInterestScreen';  // 직무 선택 화면
+import ChooseInterestScreen from '../screens/Login/ChooseInterestScreen'; // 직무 선택 화면
 import JobSelectionScreen from '../screens/Login/JobSelectionScreen';
 
 // 홈 화면 import
@@ -14,7 +14,10 @@ import MyPageScreen from '../screens/MyPage/MyPageScreen';
 import ScrapScreen from '../screens/Scrap/ScrapScreen';
 import TrendScreen from '../screens/Trend/TrendScreen';
 
-import BottomTabNavigator from './BottomTabNavigator';  // 하단 탭 네비게이션
+// ScrapDetailScreen 추가 import
+import ScrapDetailScreen from '../screens/Scrap/ScrapDetailScreen'; // ScrapDetailScreen 추가
+
+import BottomTabNavigator from './BottomTabNavigator'; // 하단 탭 네비게이션
 
 const AuthContext = createContext({
   isLoggedIn: false,
@@ -23,7 +26,6 @@ const AuthContext = createContext({
   logout: () => {},
   completeSignUp: () => {},
 });
-
 
 const Stack = createNativeStackNavigator();
 
@@ -42,7 +44,8 @@ const AppNavigator = () => {
   };
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, signedUp, login, logout, completeSignUp }}>
+    <AuthContext.Provider
+      value={{isLoggedIn, signedUp, login, logout, completeSignUp}}>
       <NavigationContainer>
         <Stack.Navigator>
           {isLoggedIn || signedUp ? (
@@ -50,7 +53,7 @@ const AppNavigator = () => {
             <Stack.Screen
               name="Main"
               component={BottomTabNavigator}
-              options={{ headerShown: false }}
+              options={{headerShown: false}}
             />
           ) : (
             <>
@@ -58,47 +61,55 @@ const AppNavigator = () => {
               <Stack.Screen
                 name="LoginScreen"
                 component={LoginScreen}
-                options={{ headerShown: false }}
+                options={{headerShown: false}}
               />
 
               {/* 회원가입 화면 */}
               <Stack.Screen
                 name="SignUpScreen"
                 component={SignUpScreen}
-                options={{ headerShown: false }}
+                options={{headerShown: false}}
               />
               <Stack.Screen
                 name="ChooseInterestScreen"
                 component={ChooseInterestScreen}
-                options={{ headerShown: false }}
+                options={{headerShown: false}}
               />
               <Stack.Screen
                 name="JobSelectionScreen"
                 component={JobSelectionScreen}
-                options={{ headerShown: false }}
+                options={{headerShown: false}}
               />
             </>
           )}
 
+          {/* 추가된 화면들 */}
           <Stack.Screen
             name="AllScreen"
             component={AllScreen}
-            options={{ headerShown: false }}
+            options={{headerShown: false}}
           />
           <Stack.Screen
             name="MyPageScreen"
             component={MyPageScreen}
-            options={{ headerShown: false }}
+            options={{headerShown: false}}
           />
           <Stack.Screen
             name="ScrapScreen"
             component={ScrapScreen}
-            options={{ headerShown: false }}
+            options={{headerShown: false}}
           />
           <Stack.Screen
             name="TrendScreen"
             component={TrendScreen}
-            options={{ headerShown: false }}
+            options={{headerShown: false}}
+          />
+
+          {/* ScrapDetailScreen 추가 */}
+          <Stack.Screen
+            name="ScrapDetail"
+            component={ScrapDetailScreen}
+            options={{headerShown: false}}
           />
         </Stack.Navigator>
       </NavigationContainer>
@@ -106,5 +117,5 @@ const AppNavigator = () => {
   );
 };
 
-export { AppNavigator, AuthContext };
+export {AppNavigator, AuthContext};
 export default AppNavigator;

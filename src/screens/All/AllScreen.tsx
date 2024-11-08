@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image, ScrollView } from 'react-native';
+import {View, Text, StyleSheet, Image, ScrollView} from 'react-native';
 
 // 임시 이미지와 데이터 (로컬 이미지)
 const thumbnailImage = require('../../img/thumbnail.png'); // 로컬 이미지 파일
