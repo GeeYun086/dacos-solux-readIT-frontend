@@ -1,5 +1,12 @@
 import React from 'react';
-import {View, Text, StyleSheet, Image, ScrollView} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  ScrollView,
+  TouchableOpacity,
+} from 'react-native';
 
 // 임시 이미지와 데이터 (로컬 이미지)
 const thumbnailImage = require('../../img/thumbnail.png'); // 로컬 이미지 파일
@@ -34,6 +41,11 @@ const articles = [
 ];
 
 const AllScreen = () => {
+  const handleArticlePress = article => {
+    // 여기서 누른 article에 대한 처리 로직을 추가할 수 있습니다.
+    console.log('Clicked on article:', article);
+  };
+
   return (
     <View style={styles.container}>
       {/* IT 관련 콘텐츠 모두 확인하기 텍스트 */}
@@ -42,13 +54,18 @@ const AllScreen = () => {
       {/* 모든 기사 목록 */}
       <ScrollView style={styles.articleList}>
         {articles.map((article, index) => (
-          <View key={index} style={styles.articleItem}>
+          <TouchableOpacity
+            key={index}
+            style={styles.articleItem}
+            onPress={() => handleArticlePress(article)} // 터치 시 호출되는 함수
+            activeOpacity={0.7} // 터치 시 불투명도 조정
+          >
             <Image source={article.thumbnail} style={styles.articleThumbnail} />
             <View style={styles.articleTextContainer}>
               <Text style={styles.articleTitle}>{article.title}</Text>
               <Text style={styles.articlePublisher}>{article.publisher}</Text>
             </View>
-          </View>
+          </TouchableOpacity>
         ))}
       </ScrollView>
     </View>
@@ -60,6 +77,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 20,
     paddingVertical: 20,
+    backgroundColor: 'white',
   },
   subTitle: {
     fontSize: 20,

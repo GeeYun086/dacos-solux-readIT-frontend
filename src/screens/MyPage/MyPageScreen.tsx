@@ -1,11 +1,17 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  ScrollView,
+} from 'react-native';
 
 const MyPageScreen = () => {
   // 사용자 정보 예시 (변수로 처리)
-  const userName = '눈송이';  // 실제로는 사용자의 이름을 상태나 props로 받아야 합니다.
-  const userEmail = 'noonsong@sookmyung.ac.kr';  // 마찬가지로 이메일도 변수로 받아야 합니다.
-  const selectedJob = '백엔드 개발자';  // 선택한 직무도 변수로 처리
+  const userName = '눈송이'; // 실제로는 사용자의 이름을 상태나 props로 받아야 합니다.
+  const userEmail = 'noonsong@sookmyung.ac.kr'; // 마찬가지로 이메일도 변수로 받아야 합니다.
+  const selectedJob = '백엔드 개발자'; // 선택한 직무도 변수로 처리
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -62,6 +68,7 @@ const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 20,
     paddingVertical: 20,
+    backgroundColor: 'white',
   },
   userInfoText: {
     fontSize: 16,
@@ -70,13 +77,13 @@ const styles = StyleSheet.create({
   },
   separator: {
     borderBottomWidth: 1,
-    borderBottomColor: '#D3D3D3',  // 회색 가로선
+    borderBottomColor: '#D3D3D3', // 회색 가로선
     marginVertical: 15,
   },
   settingText: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#888888',  // 회색 텍스트
+    color: '#888888', // 회색 텍스트
     marginBottom: 10,
   },
   changeJobText: {

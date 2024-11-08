@@ -1,14 +1,14 @@
 import React from 'react';
-import { Text, Image } from 'react-native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Trend from '../screens/Trend/TrendScreen';  // 트렌드 화면
-import All from '../screens/All/AllScreen';        // 전체 화면
-import Scrap from '../screens/Scrap/ScrapScreen';  // 스크랩 화면
-import MyPage from '../screens/MyPage/MyPageScreen';  // 마이페이지(MY) 화면
+import {Text, Image} from 'react-native';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import Trend from '../screens/Trend/TrendScreen'; // 트렌드 화면
+import All from '../screens/All/AllScreen'; // 전체 화면
+import Scrap from '../screens/Scrap/ScrapScreen'; // 스크랩 화면
+import MyPage from '../screens/MyPage/MyPageScreen'; // 마이페이지(MY) 화면
 
-const trendIcon = require('../img/trend.png');   // 트렌드 아이콘
-const allIcon = require('../img/all.png');       // 전체 아이콘
-const scrapIcon = require('../img/scrap.png');   // 스크랩 아이콘
+const trendIcon = require('../img/trend.png'); // 트렌드 아이콘
+const allIcon = require('../img/all.png'); // 전체 아이콘
+const scrapIcon = require('../img/scrap.png'); // 스크랩 아이콘
 const myPageIcon = require('../img/myPage.png'); // 마이페이지 아이콘
 
 const Tab = createBottomTabNavigator();
@@ -16,8 +16,8 @@ const Tab = createBottomTabNavigator();
 const BottomTabNavigator = () => {
   return (
     <Tab.Navigator
-      screenOptions={({ route }) => ({
-        tabBarIcon: ({ color, size }) => {
+      screenOptions={({route}) => ({
+        tabBarIcon: ({color, size}) => {
           let iconSource;
 
           if (route.name === 'Trend') {
@@ -33,24 +33,30 @@ const BottomTabNavigator = () => {
           return (
             <Image
               source={iconSource}
-              style={{ width: size, height: size, tintColor: color }}
+              style={{
+                width: 50,
+                height: 50,
+                tintColor: color,
+                marginTop: 30, // 아이콘의 아래 여백을 늘려서 하단 바의 높이를 키움
+              }}
             />
           );
         },
         tabBarShowLabel: false,
-        tabBarActiveTintColor: 'black',
+        tabBarActiveTintColor: '#007BFF',
         tabBarInactiveTintColor: 'gray',
         headerTitle: () => (
-          <Text style={{ fontSize: 20, color: '#007BFF' }}>
-            ReadIT
-           </Text>
-          ),
-          headerTitleAlign: 'left',  // 왼쪽 정렬
-          headerStyle: {
-          height: 50,  // 헤더 높이 줄이기
-          },
-      })}
-    >
+          <Text style={{fontSize: 25, color: '#007BFF'}}>ReadIT</Text>
+        ),
+        headerTitleAlign: 'left', // 왼쪽 정렬
+        headerStyle: {
+          height: 50, // 헤더 높이 줄이기
+        },
+        tabBarStyle: {
+          height: 70, // 하단바 높이 증가 (기존 50에서 80으로 설정)
+          paddingBottom: 10, // 하단 바의 여백을 더 추가하여 아이콘이 바닥에 더 가까워지지 않도록 조정
+        },
+      })}>
       <Tab.Screen name="Trend" component={Trend} />
       <Tab.Screen name="All" component={All} />
       <Tab.Screen name="Scrap" component={Scrap} />
