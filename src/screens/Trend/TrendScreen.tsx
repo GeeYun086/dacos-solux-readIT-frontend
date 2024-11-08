@@ -41,7 +41,7 @@ const TrendScreen = () => {
 
   return (
     <SafeAreaView style={styles.safeAreaContainer}>
-      <ScrollView style={styles.container}>
+      <ScrollView style={styles.container} contentContainerStyle={styles.scrollViewContent}>
         {/* 주목해야 할 관심 직무 소식 텍스트 */}
         <Text style={styles.subTitle}>주목해야 할 관심 직무 소식</Text>
 
@@ -114,7 +114,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 20,
-    paddingVertical: 40,
+    paddingVertical: 20,
+  },
+  scrollViewContent: {
+    paddingBottom: 80, // Ensure there's enough space at the bottom
   },
   subTitle: {
     fontSize: 20,

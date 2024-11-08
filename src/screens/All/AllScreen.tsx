@@ -59,11 +59,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 20,
-    paddingVertical: 40,
+    paddingVertical: 20,
   },
   subTitle: {
     fontSize: 20,
-    marginBottom: 20,
     fontWeight: '600',
   },
   articleList: {
