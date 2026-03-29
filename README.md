@@ -82,7 +82,9 @@
 | [배정연](https://github.com/bluishflame) | Frontend            | 마인드맵, 형광펜 및 메모 |
 | [정지윤](https://github.com/GeeYun086) | Frontend            | 트렌드, 전체 기사, 기사 상세, 스크랩, 백엔드 연동 |
 </br>
+
 > [ReadIT 프로젝트 설명 및 전체 팀원 소개 바로 가기](https://github.com/Team4-ReadIT)
+
 </br></br>
 
 ## 📂 𝗣𝗿𝗼𝗷𝗲𝗰𝘁 𝗙𝗼𝗹𝗱𝗲𝗿 𝗦𝘁𝗿𝘂𝗰𝘁𝘂𝗿𝗲
